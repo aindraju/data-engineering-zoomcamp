@@ -9,3 +9,4 @@
 **logs/
 **.env
 **__pycache__/
+week_2_data_ingestion/airflow/.env_example
