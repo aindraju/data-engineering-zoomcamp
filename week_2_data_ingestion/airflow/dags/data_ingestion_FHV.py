@@ -89,24 +89,24 @@ with dag:
         },
     )
 
-    bigquery_external_table_task = BigQueryCreateExternalTableOperator(
-        task_id="bigquery_external_table_task",
-        table_resource={
-            "tableReference": {
-                "projectId": PROJECT_ID,
-                "datasetId": BIGQUERY_DATASET,
-                "tableId": TABLE_NAME_TEMPLATE,
-            },
-            "externalDataConfiguration": {
-                "sourceFormat": "PARQUET",
-                "sourceUris": [f"gs://{BUCKET}/raw/{parquet_file}"],
-            },
-        },
-    )
+    # bigquery_external_table_task = BigQueryCreateExternalTableOperator(
+    #     task_id="bigquery_external_table_task",
+    #     table_resource={
+    #         "tableReference": {
+    #             "projectId": PROJECT_ID,
+    #             "datasetId": BIGQUERY_DATASET,
+    #             "tableId": TABLE_NAME_TEMPLATE,
+    #         },
+    #         "externalDataConfiguration": {
+    #             "sourceFormat": "PARQUET",
+    #             "sourceUris": [f"gs://{BUCKET}/raw/{parquet_file}"],
+    #         },
+    #     },
+    # )
 
     delete_csv_parquet_task = BashOperator(
         task_id='delete_csv_parquet_task',
         bash_command= f'rm {AIRFLOW_HOME}/{FILENAME_TEMPLATE} {AIRFLOW_HOME}/{parquet_file}'
     )
 
-    download_dataset_task >> format_to_parquet_task >> local_to_gcs_task >> bigquery_external_table_task >> delete_csv_parquet_task
+    download_dataset_task >> format_to_parquet_task >> local_to_gcs_task >> delete_csv_parquet_task
