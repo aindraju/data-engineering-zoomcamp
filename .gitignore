@@ -9,4 +9,8 @@
 **logs/
 **.env
 **__pycache__/
-week_2_data_ingestion/airflow/.env_example
+.history
+**/ny_taxi_postgres_data/*
+serving_dir
+*.csv
+.ipynb_checkpoints/

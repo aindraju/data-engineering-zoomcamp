@@ -11,8 +11,8 @@ from airflow.providers.google.cloud.operators.bigquery import BigQueryCreateExte
 import pyarrow.csv as pv
 import pyarrow.parquet as pq
 
-PROJECT_ID = os.environ.get('GCP_PROJECT_ID')
-BUCKET = os.environ.get('GCP_GCS_BUCKET')
+PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
+BUCKET = os.environ.get("GCP_GCS_BUCKET")
 
 dataset_file = "yellow_tripdata_2021-01.csv"
 dataset_url = f"https://s3.amazonaws.com/nyc-tlc/trip+data/{dataset_file}"
@@ -60,12 +60,12 @@ default_args = {
 
 # NOTE: DAG declaration - using a Context Manager (an implicit way)
 with DAG(
-        dag_id="data_ingestion_gcs_dag",
-        schedule_interval="@daily",
-        default_args=default_args,
-        catchup=False,
-        max_active_runs=1,
-        tags=['dtc-de'],
+    dag_id="data_ingestion_gcs_dag",
+    schedule_interval="@daily",
+    default_args=default_args,
+    catchup=False,
+    max_active_runs=1,
+    tags=['dtc-de'],
 ) as dag:
     download_dataset_task = BashOperator(
         task_id="download_dataset_task",
