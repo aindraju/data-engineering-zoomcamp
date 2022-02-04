@@ -101,7 +101,7 @@ with dag:
 
     delete_csv_parquet_task = BashOperator(
         task_id='delete_csv_parquet_task',
-        bash_command=f'rm {dataset_file} {parquet_file}'
+        bash_command=f'rm {AIRFLOW_HOME}/{dataset_file} {AIRFLOW_HOME}/{parquet_file}'
     )
 
     download_dataset_task >> format_to_parquet_task >> local_to_gcs_task >> delete_csv_parquet_task
