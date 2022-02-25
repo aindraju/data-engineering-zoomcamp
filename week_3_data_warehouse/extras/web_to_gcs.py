@@ -14,7 +14,7 @@ Pre-reqs:
 
 # services = ['fhv','green','yellow']
 init_url = 'https://nyc-tlc.s3.amazonaws.com/trip+data/'
-BUCKET = os.environ.get("GCP_GCS_BUCKET", "dtc_data_lake_pivotal-surfer-336713")
+BUCKET = os.environ.get("GCP_GCS_BUCKET", "dtc_data_lake_digital-river-339317")
 
 
 def upload_to_gcs(bucket, object_name, local_file):
@@ -33,7 +33,7 @@ def upload_to_gcs(bucket, object_name, local_file):
 
 
 def web_to_gcs(year, service):
-    for i in range(13):
+    for i in range(11,13):
         month = '0'+str(i+1)
         month = month[-2:]
         file_name = service + '_tripdata_' + year + '-' + month + '.csv'

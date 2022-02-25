@@ -60,13 +60,21 @@ with DAG(
             },
         )
 
-        CREATE_BQ_TBL_QUERY = (
+
+        if colour == 'yellow':
+            CREATE_BQ_TBL_QUERY = (
             f"CREATE OR REPLACE TABLE {BIGQUERY_DATASET}.{colour}_{DATASET} \
             PARTITION BY DATE({ds_col}) \
             AS \
             SELECT * FROM {BIGQUERY_DATASET}.{colour}_{DATASET}_external_table;"
         )
-
+        else:
+            CREATE_BQ_TBL_QUERY = (
+                f"CREATE OR REPLACE TABLE {BIGQUERY_DATASET}.{colour}_{DATASET} \
+                PARTITION BY DATE({ds_col}) \
+                AS \
+                SELECT * EXCEPT (ehail_fee) FROM {BIGQUERY_DATASET}.{colour}_{DATASET}_external_table;")
+                
         # Create a partitioned table from external table
         bq_create_partitioned_table_job = BigQueryInsertJobOperator(
             task_id=f"bq_create_{colour}_{DATASET}_partitioned_table_task",
